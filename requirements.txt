@@ -1,0 +1,7 @@
+emoji==1.7.0
+pandas==1.4.4
+gensim==4.3.2
+sentence_transformers==3.0.1
+bertopic==0.16.2
+transformers==4.41.2
+pyLDAvis==3.4.0

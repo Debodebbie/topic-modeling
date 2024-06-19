@@ -12,6 +12,7 @@
 - Ideally the next step should be lemmatization or stemming, however for hebrew the few ones I found eitehr didn't run (needs more debugging time) or were LLMs that are too big for my computer to run on.
 - Run LDA or BERTtopic
 - LDA (and other mthods like HDBSCAN) don't output a readable topic but rather keywords that belong to a topic - so my idea was to still use them but add a generative LLM after that, which will create this readable topic out of the keywords. With a bit of prompt enngineering (like also giving the relevant tweets where the topic appears) this can get nice readable results. Larger models did not work on my coputer so I had to use gpt-2 which is inherently not good at foreign languages anyways so it doesn not give good results. Testing it on ChatGPT resulted in promising topics.
+- Run the analysis notebook with the saved files in the data folder. The BERTopic file is too large and therefore not stored - running the topic_modeling.py will create it (takes aroung 10 mins) 
 
 
 ## Language Challenges

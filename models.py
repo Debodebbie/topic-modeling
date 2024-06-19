@@ -1,5 +1,6 @@
 from typing import List
 import pandas as pd
+import pickle
 from gensim.models.ldamodel import LdaModel
 from gensim.corpora import Dictionary
 from sentence_transformers import SentenceTransformer
@@ -83,7 +84,14 @@ def bertopic_model(df: pd.DataFrame) -> List[str]:
     embedding_model = SentenceTransformer(model_name)
     text_list = df['final'].tolist()
     topic_model = BERTopic(embedding_model=embedding_model)
-    topics, probabilities = topic_model.fit_transform(text_list)
+    _, _ = topic_model.fit_transform(text_list)
     topic_df = topic_model.get_topic_info()
     topic_df['Name'] = topic_df['Name'].str.replace(r'^[-]?\d+_','', regex=True).str.replace('_',' ')
+
+    # Save file to pickle
+    with open("data/topic_model.pkl", "wb+") as f:
+        pickle.dump(topic_model, f)
+
+    print("Topic model saved in data/topic_model.pk")
+
     return topic_df['Name'].to_list()
