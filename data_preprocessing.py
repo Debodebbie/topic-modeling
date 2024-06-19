@@ -5,20 +5,20 @@ import re
 class TwitterDataProcessing():
     """ Class to preprocess the twitter data file for further topic modeling """
 
-    def __init__(self, filepath) -> None:
+    def __init__(self, filepath: str) -> None:
         self.filepath = filepath
         self.df = None
         self.stopwords = None
 
 
-    def read_csv_to_df(self):
+    def read_csv_to_df(self: str) -> None:
         """Reads a csv file to a pandas Dataframe
         """
 
         df = pd.read_csv(self.filepath)
         self.df = df
     
-    def remove_emojis(self, text):
+    def remove_emojis(self, text: str) -> None:
         """Removes emojis from a string
 
         Args:
@@ -33,7 +33,7 @@ class TwitterDataProcessing():
                 text = text.replace(char, '')
         return text
 
-    def remove_additinal_emojis(self, text):
+    def remove_additinal_emojis(self, text: str) -> None:
         """Remove additional emojis that haven't  been removed with the remove_emoji() function.
 
         Args:
@@ -51,7 +51,7 @@ class TwitterDataProcessing():
                             "]+", flags=re.UNICODE)
         return emoji_pattern.sub(r'', text)
     
-    def remove_urls(self, text):
+    def remove_urls(self, text: str) -> None:
         """Removes URLs in the given text.
 
         Args:
@@ -64,7 +64,7 @@ class TwitterDataProcessing():
         text = re.sub(r'http\S+', '', text)
         return text
     
-    def remove_handles(self, text):
+    def remove_handles(self, text: str) -> None:
         """Removes twitter handles using regex patter: starting with @ and ending at a whitespace.
 
         Args:
@@ -77,7 +77,7 @@ class TwitterDataProcessing():
         pattern = r'(@\w+)(\s|$)'
         return re.sub(pattern, '', text)
     
-    def remove_other_char(self, text):
+    def remove_other_char(self, text: str) -> None:
         """Remove characters that have been seen in the data: 'RT', '_', '-', '&gt', '...'
 
         Args:
@@ -94,7 +94,7 @@ class TwitterDataProcessing():
         text_new = text_new.replace('&gt', '')
         return text_new
     
-    def remove_repeated_chars(self, text):
+    def remove_repeated_chars(self, text: str) -> None:
         """Removes repeated characters (if they appear 3 or more times). For example something like 'noooo' would be changed to 'no'
 
         Args:
@@ -110,7 +110,7 @@ class TwitterDataProcessing():
         final_text = cleaned_text[::-1]
         return final_text
 
-    def remove_stopwords(self, text):
+    def remove_stopwords(self, text: str) -> None:
         """Removed stopwords from the text. The list of stopwords has been taken from: https://github.com/NNLP-IL/Stop-Words-Hebrew
 
          Args:
@@ -124,7 +124,7 @@ class TwitterDataProcessing():
         filtered_tokens = [token for token in tokens if token not in self.stopwords]
         return ' '.join(filtered_tokens)
     
-    def clean_text(self):
+    def clean_text(self) -> None:
         """Performing all steps to process the twitter data.
         """
 
@@ -136,7 +136,7 @@ class TwitterDataProcessing():
         self.df['final'] = self.df['final'].apply(self.remove_repeated_chars)
         self.df['final'] = self.df['final'].apply(self.remove_stopwords)
 
-    def process(self):
+    def process(self) -> pd.DataFrame:
         """Processes the raw csv data file to a cleaned pandas Dataframe
 
         Returns:

@@ -6,7 +6,6 @@
     - `python topic_modeling.py --model bert`
     - `python topic_modeling.py --model lda`
 
-
 ## Approach
 - Cleaning the data
 - Ideally the next step should be lemmatization or stemming, however for hebrew the few ones I found eitehr didn't run (needs more debugging time) or were LLMs that are too big for my computer to run on.
